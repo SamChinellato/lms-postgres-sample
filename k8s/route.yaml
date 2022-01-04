@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: postgresql
+  labels:
+    deployment: postgresql
+spec:
+  to:
+    kind: Service
+    name: postgresql
+    weight: 100
+  port:
+    targetPort: postgresql
+  wildcardPolicy: None
