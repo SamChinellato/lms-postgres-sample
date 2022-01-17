@@ -6,22 +6,23 @@ metadata:
     description: postgresql-deployment-template
     deployment: postgresql
 objects:
-  - kind: DeploymentConfig
-    apiVersion: apps.openshift.io/v1
+  - apiVersion: apps/v1
+    kind: Deployment
     metadata:
       name: postgresql
       labels:
         deployment: postgresql
     spec:
-      strategy:
-        type: Recreate
-        recreateParams:
-          timeoutSeconds: 600
-        resources: {}
-        activeDeadlineSeconds: 21600
+      minReadySeconds: 30
       replicas: 1
+      revisionHistoryLimit: 10
       selector:
-        name: postgresql
+        matchLabels:
+          name: postgresql
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
       template:
         metadata:
           labels:
@@ -35,6 +36,7 @@ objects:
             - resources:
                 limits:
                   memory: 512Mi
+                  cpu: 1
               readinessProbe:
                 exec:
                   command:
