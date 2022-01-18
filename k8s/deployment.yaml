@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgresql
   labels:
     deployment: postgresql
+  name: postgresql
 spec:
   minReadySeconds: 30
   replicas: 1
@@ -20,66 +20,66 @@ spec:
       labels:
         name: postgresql
     spec:
-      volumes:
-        - name: postgresql-data
-          persistentVolumeClaim:
-            claimName: postgresql
       containers:
-        - resources:
-            limits:
-              memory: 512Mi
-              cpu: 1
-          readinessProbe:
-            exec:
-              command:
-                - /usr/libexec/check-container
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          terminationMessagePath: /dev/termination-log
-          name: postgresql
-          livenessProbe:
-            exec:
-              command:
-                - /usr/libexec/check-container
-                - '--live'
-            initialDelaySeconds: 120
-            timeoutSeconds: 10
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          env:
-            - name: POSTGRESQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql
-                  key: database-user
-            - name: POSTGRESQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql
-                  key: database-password
-            - name: POSTGRESQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql
-                  key: database-name
-          securityContext:
-            capabilities: {}
-            privileged: false
-          ports:
-            - containerPort: 5432
-              protocol: TCP
-          imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - name: postgresql-data
-              mountPath: /var/lib/pgsql/data
-          terminationMessagePolicy: File
-          image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
+      - env:
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: postgresql-1642528729
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: postgresql-1642528729
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: postgresql-1642528729
+        image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+            - --live
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: postgresql
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
+        securityContext:
+          capabilities: {}
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: postgresql-data
       dnsPolicy: ClusterFirst
-      securityContext: {}
+      restartPolicy: Always
       schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: postgresql
