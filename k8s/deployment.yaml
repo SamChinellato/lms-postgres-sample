@@ -7,7 +7,7 @@ metadata:
 spec:
   minReadySeconds: 30
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 0
   selector:
     matchLabels:
       name: postgresql
@@ -26,17 +26,17 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: postgresql-1642760309
+              name: postgresql-1642783854
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: postgresql-1642760309
+              name: postgresql-1642783854
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgresql-1642760309
+              name: postgresql-1642783854
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
         imagePullPolicy: IfNotPresent
         livenessProbe:
