@@ -15,7 +15,7 @@ objects:
     spec:
       minReadySeconds: 30
       replicas: 1
-      revisionHistoryLimit: 10
+      revisionHistoryLimit: 0
       selector:
         matchLabels:
           name: postgresql
