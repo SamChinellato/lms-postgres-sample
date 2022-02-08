@@ -26,19 +26,24 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: postgresql-1644330363
+              name: postgresql-1644330959
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: postgresql-1644330363
+              name: postgresql-1644330959
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgresql-1644330363
+              name: postgresql-1644330959
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
         imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - pg_ctl stop -D /var/lib/pgsql/data/userdata
         livenessProbe:
           exec:
             command:
