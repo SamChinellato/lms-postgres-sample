@@ -26,17 +26,17 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: postgresql-1644244746
+              name: postgresql-1644316448
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: postgresql-1644244746
+              name: postgresql-1644316448
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgresql-1644244746
+              name: postgresql-1644316448
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -74,10 +74,6 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/pgsql/data
           name: postgresql-data
-        lifecycle:
-          preStop:
-            exec:
-              command: ["pg_ctl stop -D /var/lib/pgsql/data/userdata"]
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
