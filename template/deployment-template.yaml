@@ -86,6 +86,10 @@ objects:
                   mountPath: /var/lib/pgsql/data
               terminationMessagePolicy: File
               image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
+              lifecycle:
+                preStop:
+                  exec:
+                    command: ["pg_ctl stop -D /var/lib/pgsql/data/userdata"]
           restartPolicy: Always
           terminationGracePeriodSeconds: 30
           dnsPolicy: ClusterFirst
