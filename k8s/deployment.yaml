@@ -11,8 +11,10 @@ spec:
   selector:
     matchLabels:
       name: postgresql
-  strategy: 
-    type: Recreate     
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -24,17 +26,17 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: postgresql-1667844737
+              name: postgresql-1667845315
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: postgresql-1667844737
+              name: postgresql-1667845315
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgresql-1667844737
+              name: postgresql-1667845315
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
         imagePullPolicy: IfNotPresent
         lifecycle:
