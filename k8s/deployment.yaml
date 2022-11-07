@@ -11,10 +11,8 @@ spec:
   selector:
     matchLabels:
       name: postgresql
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
+  strategy: 
+    type: Recreate     
   template:
     metadata:
       labels:
