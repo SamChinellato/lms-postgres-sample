@@ -28,10 +28,6 @@ objects:
           labels:
             name: postgresql
         spec:
-          volumes:
-            - name: postgresql-data
-              persistentVolumeClaim:
-                claimName: postgresql
           containers:
             - resources:
                 limits:
@@ -81,9 +77,6 @@ objects:
                 - containerPort: 5432
                   protocol: TCP
               imagePullPolicy: IfNotPresent
-              volumeMounts:
-                - name: postgresql-data
-                  mountPath: /var/lib/pgsql/data
               terminationMessagePolicy: File
               image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql:13-el8
               lifecycle:
