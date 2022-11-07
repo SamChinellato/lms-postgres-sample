@@ -76,15 +76,8 @@ spec:
           privileged: false
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /var/lib/pgsql/data
-          name: postgresql-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: postgresql-data
-        persistentVolumeClaim:
-          claimName: postgresql
