@@ -85,7 +85,7 @@ objects:
                 - name: postgresql-data
                   mountPath: /var/lib/pgsql/data
               terminationMessagePolicy: File
-              image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
+              image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql:13-el8
               lifecycle:
                 preStop:
                   exec:
