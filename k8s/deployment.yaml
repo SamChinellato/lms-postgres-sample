@@ -26,17 +26,17 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: postgresql-1667933483
+              name: postgresql-1667935054
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: postgresql-1667933483
+              name: postgresql-1667935054
         - name: POSTGRESQL_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgresql-1667933483
+              name: postgresql-1667935054
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql:13-el8
         imagePullPolicy: IfNotPresent
         lifecycle:
